@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* CSS Document */
+body{ max-width:640px; margin:auto; font-size:16px; font-family:"微软雅黑",'Microsoft Yahei', 'Simsun'; color:#000; text-align:justify; line-height:1.5em;  -webkit-text-size-adjust:none; min-width:320px; -webkit-tap-highlight-color:rgba(0,0,0,0);  -webkit-appearance:none; -webkit-touch-callout:none; -webkit-user-select: none; overflow-x:hidden;}
+ul, li{list-style: none;}
+textarea{resize:vertical;}
+table{border-collapse: collapse; border-spacing: 0; font-size: 14px; border: 0;}
+input{vertical-align: middle; appearance:normal;}
+input[type=button]{cursor: pointer; font-family: '微软雅黑';}
+*{margin: 0; padding: 0;}
+.fix:after{display:block; height:0; clear:both; overflow:hidden; visibility:hidden; content:'';}
+a:link, a:visited{text-decoration: none; color: #333;}
+img{border: none; vertical-align:middle;}
+.fl{float: left;}
+.fr{float: right;}
+.clear{clear: both;}
+.clearfix{ height:0px; overflow:hidden; clear:both; line-height:0; font-size:0; width:100%;}
+.hide{ display:none;}
+#indexBody{ background:url(../images/indexbg.png) repeat left 160px; background-size:cover;}
+/*.bodybg1:after{ content:''; background:#e8e8e8 url(../images/bg1.jpg) repeat; background-size:100% 100%; width:100%; height:100%; left:0; top:0; z-index:-1; position:fixed;}
+*/
+.zmask{ display:none; position:absolute; background-color:rgba(0,0,0,0.8); width:100%; height:100%; left: 0px; top: 0px; z-index:5;}
+.mainContainer{ -webkit-animation: startMotion 0.5s linear 0.2s 1 alternate;}
+@-webkit-keyframes 'startMotion' {
+ 0% { margin-left:100%;}
+ 100% { margin-left:0;}
+}
+#err404{ min-height:372px; position:relative;}
+#err404:after{ content:''; background-image:-webkit-gradient(radial, 50% 50%, 0, 50% 30%, 300, from(#fff), to(#fff)); background-size:100% 100%; width:100%; height:100%; left:0; top:0; z-index:-1; position:fixed;}
+.mainConWrap{ width:100%; left:0; top:50%; position:absolute;}
+.mainCon{ margin:auto; width:100%; position:relative;}
+#err404 .mainConWrap{ margin-top:-186px; height:372px;}
+#err404 .mainCon{height:365px; background:url(../images/bg3.png) no-repeat center bottom; background-size:212px auto;}
+#err404 .mainCon .tip,#err404 .mainCon .robot{ z-index:10; position:absolute;}
+#err404 .mainCon .tip{ height:151px; top:0px; left:0%; margin-left:-50px;}
+#err404 .mainCon .robot{ height:215px; bottom:-5px; right:0%; margin-right:-65px;}
+#err404 .mainCon .tip.stop{-webkit-animation: startMotion1 0.2s linear 0.2s 2 alternate;}
+@-webkit-keyframes 'startMotion1' {
+ 0% { margin-top:5px;}
+ 100% { margin-top:0;}
+}
+.mainCon .robot.stop{-webkit-animation: startMotion2 0.2s linear 0.2s 2 alternate;}
+@-webkit-keyframes 'startMotion2' {
+ 0% { margin-bottom:-5px;}
+ 100% { margin-bottom:0;}
+}
+
+#err500{ min-height:422px; position:relative;}
+#err500:after{ content:''; background-image:-webkit-gradient(linear, 0 0,0 100%, from(#e9e8d3), to(#fff)); background-size:100% 100%; width:100%; height:100%; left:0; top:0; z-index:-1; position:fixed;}
+#err500 .mainConWrap{ margin-top:-211px; height:422px;}
+#err500 .mainCon{ position:relative; height:100%;}
+#err500 .img1,#err500 .img2,#err500 .img3{ position:absolute; left:50%;}
+#err500 .img1{ -webkit-transform-origin:left bottom;  -webkit-transform:scale(1); height:123px; top:0px; margin-left:-150px;}
+#err500 .img2{-webkit-transform:rotateY(0deg); height:191px; top:134px; margin-left:-82px;}
+#err500 .img3{ height:96px; bottom:0px; margin-left:-100px;}
+#err500 .img1{-webkit-animation: startMotion3 1s linear 0.1s 1 alternate;}
+@-webkit-keyframes 'startMotion3' {
+ 0% { -webkit-transform:scale(0); }
+ 100% {-webkit-transform:scale(1);}
+}
+#err500 .img21{-webkit-animation: startMotion4 3s linear 3s 1 alternate;}
+@-webkit-keyframes 'startMotion4' {
+0% { top:0; }
+ 100% { top:134px;}
+}
+#err500 .img31{-webkit-animation: startMotion5 2s linear 3s 1 alternate;}
+@-webkit-keyframes 'startMotion5' {
+ 0% { bottom:-50px; }
+ 100% { bottom:0px;}
+}
+
+.robot2Wrap{ display:none; -webkit-transform:rotateY(0deg); position:absolute; height:100%; width:100%; left:0px; top:-150px;}
+.robot2{ position:relative; height:100%;}
+
+.robot2Wrap.stop{-webkit-animation: startMotion6 1s linear 0.1s 1 alternate;}
+@-webkit-keyframes 'startMotion6' {
+ 0% { -webkit-transform:rotateY(360deg);}
+ 100% {-webkit-transform:rotateY(0deg);}
+}
