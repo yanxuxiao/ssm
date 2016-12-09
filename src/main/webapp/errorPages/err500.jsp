@@ -1,9 +1,3 @@
-<%@page import="com.opensymphony.xwork2.ognl.OgnlValueStack"%>
-<%@page import="org.apache.commons.logging.LogFactory"%>
-<%@page import="org.apache.commons.logging.Log"%>
-<%@ page import="com.opensymphony.xwork2.ActionContext"%> 
-<%@ page import="com.opensymphony.xwork2.interceptor.ExceptionHolder"%>
-<%@ page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
 <html>
@@ -49,41 +43,5 @@ background:-webkit-gradient(linear,0 0,100% 0,from(#b0dbf4 ),color-stop(0.5,#fff
             </div>
         </div>
     </div>
-<% 
-Log log = LogFactory.getLog(Log.class) ;
-try{
-	String tipMessage = null;//中文提示信息 
-	OgnlValueStack s = (OgnlValueStack)ActionContext.getContext().getValueStack();
-	ExceptionHolder e;
-	
-	for(int i = s.size();i>0;i--){
-		Object obj = s.pop();
-		if(obj instanceof ExceptionHolder){
-			e = (ExceptionHolder)obj;
-			Exception o = e.getException();
-			if(o instanceof IllegalArgumentException){
-				if(o.getMessage().indexOf("is not defined in action")!=-1){
-					log.error("非法方式访问系统",o);
-					response.sendRedirect("/login!logout.do");
-					break;
-				}
-			}
-			if(o instanceof java.sql.SQLException){
-				java.sql.SQLException se = (java.sql.SQLException)o;
-				se.printStackTrace();
-				tipMessage = se.getMessage() ;
-				log.error(tipMessage,se);
-			}else if(o instanceof Exception){
-				tipMessage = "未知错误";
-				o.printStackTrace();
-				log.error(tipMessage,o);
-			}
-		}
-	}
-}catch(Exception e){
-	e.printStackTrace();
-	log.error(e) ;
-}
-%>
 </body>
 </html>
