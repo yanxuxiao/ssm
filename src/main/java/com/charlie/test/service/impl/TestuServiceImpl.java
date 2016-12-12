@@ -10,7 +10,7 @@ import com.charlie.test.dao.TestuMapper;
 import com.charlie.test.model.Testu;
 import com.charlie.test.service.TestuService;
 
-@Service("testuServiceImpl")
+@Service("testuService")
 public class TestuServiceImpl implements TestuService{
 	@Resource
 	private TestuMapper testuMapper ;

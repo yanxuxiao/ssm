@@ -19,11 +19,10 @@ public class TestMybatis {
 	
 	private static Logger logger = Logger.getLogger(TestMybatis.class); 
 	
-	@Resource(name="testuServiceImpl")
+	@Resource(name="testuService")
     private TestuService service = null;  
   
     @Test
-    @Ignore
     public void testInsert() {  
     	logger.info("===========start=============");
     	Testu record = new Testu() ;
@@ -34,6 +33,7 @@ public class TestMybatis {
     	logger.info("===========end=============");
     } 
     @Test
+    @Ignore
     public void testSelectAll(){
     	logger.info("===========start=============");
     	List<Testu> list = service.selectALl() ;

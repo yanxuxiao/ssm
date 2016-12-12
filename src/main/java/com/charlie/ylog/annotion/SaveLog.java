@@ -13,9 +13,9 @@ import java.lang.annotation.Target;
 @Inherited
 public @interface SaveLog {
 	
-	//是否保存请求参数
+	//鏄惁淇濆瓨璇锋眰鍙傛暟
 	boolean saveRequests() default false;
 	
-	//备注
+	//澶囨敞
 	String note() default "";
 }

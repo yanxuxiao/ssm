@@ -1,10 +1,14 @@
 package com.charlie.ylog.aspect;
 
+import java.lang.reflect.Method;
+
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import com.charlie.ylog.annotion.SaveLog;
@@ -14,46 +18,58 @@ import com.charlie.ylog.annotion.SaveLog;
 public class SaveLogAspect {
 	private final Logger logger = Logger.getLogger(SaveLogAspect.class);
 	
-	//ÇĞµã
-	@Pointcut("execution(* com.charlie.*.controller..*.*(..))&&@annotation(log)") 
-	public void mark(SaveLog log){}
+	//åˆ‡ç‚¹
+	@Pointcut("@within(com.charlie.ylog.annotion.SaveLog)||@annotation(com.charlie.ylog.annotion.SaveLog)")
+	public void mark(){}
 	
 	/**
-	 * »·ÈÆÍ¨Öª
+	 * ç¯ç»•é€šçŸ¥
 	 * @param pJoinPoint
-	 * @param log @SaveLog×¢½â
 	 * @return
 	 * @throws Throwable
 	 */
-	@Around("mark(log)")
-	public Object saveLog(ProceedingJoinPoint pJoinPoint,SaveLog log) throws Throwable{
+	@Around(value="mark()")
+	public Object saveLog(ProceedingJoinPoint joinPoint) throws Throwable{
 		Object result = null;
-//		Class<? extends Object> cla = null;
+		SaveLog log = null ;
+		Method method = null;
+		
 		StringBuffer stringBuffer = new StringBuffer();
 
-		//·½·¨Ö´ĞĞÇ°¼ÇÂ¼
+		//æ–¹æ³•æ‰§è¡Œå‰è®°å½•
 		try {
-			//Í¨¹ı·´Éä»ñÈ¡À¹½ØµÄ·½·¨
+			//é€šè¿‡åå°„è·å–æ‹¦æˆªçš„æ–¹æ³•
 //			cla = pJoinPoint.getTarget().getClass();
 
-			//·½·¨Ç©Ãû
-			String signature = pJoinPoint.getSignature().toString();
-			//·½·¨Ãû
+			//å¾—åˆ°æ–¹æ³•ä¸Šçš„æ¥å£æ—¥å¿—æ‰“å°æ³¨è§£
+			Signature sig = joinPoint.getSignature();
+			if (sig instanceof MethodSignature) {
+				method = ((MethodSignature) sig).getMethod();
+
+				log = ((MethodSignature) sig).getMethod().getAnnotation(SaveLog.class);
+				if (log == null) {
+					log = ((MethodSignature) sig).getMethod().getDeclaringClass()
+							.getAnnotation(SaveLog.class);
+				}
+			} else {
+				logger.info("SaveLog annotation is not used at method");
+			}
+			//æ–¹æ³•å
 //			String methodName = signature.substring(signature.lastIndexOf(".")+1, signature.indexOf("("));
 
-			stringBuffer.append("***********" + signature.toString() + "***********");
+			stringBuffer.append("***********" + sig.toString() + "***********");
 			stringBuffer.append(System.getProperty("line.separator"));
 			
-			//¼ÇÂ¼·½·¨ÇëÇó²ÎÊı
+			//è®°å½•æ–¹æ³•è¯·æ±‚å‚æ•°
 			if(log.saveRequests()){
-				Object[] parames = pJoinPoint.getArgs();  //Ä¿±ê·½·¨²ÎÊı
+				Object[] parames = joinPoint.getArgs();  //ç›®æ ‡æ–¹æ³•å‚æ•°
 				String paramStr = parseParames(parames);
-				stringBuffer.append("*******Parames£º" + paramStr);
+				stringBuffer.append("*******Paramesï¼š" + paramStr);
 				stringBuffer.append(System.getProperty("line.separator"));
 			}
 			
-			//¼ÇÂ¼±¸×¢
-			stringBuffer.append("*******Note£º" + log.note());
+			//è®°å½•å¤‡æ³¨
+			stringBuffer.append("*******Noteï¼š" + log.note());
 			stringBuffer.append(System.getProperty("line.separator"));
 			
 		
@@ -61,10 +77,10 @@ public class SaveLogAspect {
 			stringBuffer.append(e.getStackTrace());
 			stringBuffer.append(System.getProperty("line.separator"));
 		}finally {
-			result = pJoinPoint.proceed();
+			result = joinPoint.proceed();
 		}
 		
-		//·½·¨Ö´ĞĞºó¼ÇÂ¼
+		//æ–¹æ³•æ‰§è¡Œåè®°å½•
 		stringBuffer.append("***********end***********");
 		stringBuffer.append(System.getProperty("line.separator"));
 		
@@ -73,7 +89,7 @@ public class SaveLogAspect {
 	}
 	
 	/**
-	 * ÇëÇó²ÎÊı¸ñÊ½×ª»»
+	 * è¯·æ±‚å‚æ•°æ ¼å¼è½¬æ¢
 	 * @param parames
 	 * @return
 	 */
