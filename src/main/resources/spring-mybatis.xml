@@ -49,7 +49,7 @@
     </bean>
 
     <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->  
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+    <bean id="mybatisSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
         <property name="dataSource" ref="dataSource" />  
         <!-- 自动扫描mapping.xml文件 -->  
         <property name="mapperLocations" value="classpath:com/charlie/test/mapping/*.xml"></property>  
@@ -57,8 +57,8 @@
 
     <!-- DAO接口所在包名，Spring会自动查找其下的类 -->  
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
-        <property name="basePackage" value="com.charlie.test.dao" />  
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>  
+        <property name="basePackage" value="com.charlie.*.dao" />  
+        <property name="sqlSessionFactoryBeanName" value="mybatisSessionFactory"></property>  
     </bean>  
 
     <!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->  
